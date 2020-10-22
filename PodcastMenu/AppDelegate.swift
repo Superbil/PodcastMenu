@@ -7,10 +7,7 @@
 //
 
 import Cocoa
-
 import Sparkle
-import Fabric
-import Crashlytics
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -28,7 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        Fabric.with([Crashlytics.self])
         
         statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
         statusItem.image = NSImage(named: "podcast")!

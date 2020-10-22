@@ -25,8 +25,6 @@
 		DD0BFE5B1CE268A500446474 /* OvercastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0BFE5A1CE268A500446474 /* OvercastController.swift */; };
 		DD0BFE621CE276CF00446474 /* MediaKeysHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0BFE611CE276CF00446474 /* MediaKeysHandler.swift */; };
 		DD0BFE671CE27D5400446474 /* overcast.js in Resources */ = {isa = PBXBuildFile; fileRef = DD0BFE661CE27D5400446474 /* overcast.js */; };
-		DD0BFE731CE2890000446474 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0BFE711CE2890000446474 /* Fabric.framework */; };
-		DD0BFE741CE2890000446474 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0BFE721CE2890000446474 /* Crashlytics.framework */; };
 		DD13C8B81CE8DE9A002174C4 /* PMEventTap.m in Sources */ = {isa = PBXBuildFile; fileRef = DD13C8B71CE8DE9A002174C4 /* PMEventTap.m */; };
 		DD13C8BB1CE8E4DE002174C4 /* MediaKeysCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD13C8BA1CE8E4DE002174C4 /* MediaKeysCoordinator.swift */; };
 		DD13C8BD1CE8E587002174C4 /* MediaKeysUsers.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD13C8BC1CE8E587002174C4 /* MediaKeysUsers.plist */; };
@@ -108,8 +106,6 @@
 		DD0BFE5A1CE268A500446474 /* OvercastController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvercastController.swift; sourceTree = "<group>"; };
 		DD0BFE611CE276CF00446474 /* MediaKeysHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaKeysHandler.swift; sourceTree = "<group>"; };
 		DD0BFE661CE27D5400446474 /* overcast.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = overcast.js; sourceTree = "<group>"; };
-		DD0BFE711CE2890000446474 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		DD0BFE721CE2890000446474 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		DD13C8B61CE8DE9A002174C4 /* PMEventTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMEventTap.h; sourceTree = "<group>"; };
 		DD13C8B71CE8DE9A002174C4 /* PMEventTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMEventTap.m; sourceTree = "<group>"; };
 		DD13C8BA1CE8E4DE002174C4 /* MediaKeysCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaKeysCoordinator.swift; sourceTree = "<group>"; };
@@ -160,8 +156,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				012E8CCC1FA96F7F00E5FBF9 /* IGListKit.framework in Frameworks */,
-				DD0BFE741CE2890000446474 /* Crashlytics.framework in Frameworks */,
-				DD0BFE731CE2890000446474 /* Fabric.framework in Frameworks */,
 				012E8CCE1FA96F7F00E5FBF9 /* Sparkle.framework in Frameworks */,
 				DD5F6DBC1F7FE93400BC57AE /* DFRFoundation.framework in Frameworks */,
 				012E8CD01FA96F7F00E5FBF9 /* SwiftyJSON.framework in Frameworks */,
@@ -184,8 +178,6 @@
 				012E8CC91FA96F7E00E5FBF9 /* IGListKit.framework */,
 				012E8CCA1FA96F7E00E5FBF9 /* Sparkle.framework */,
 				012E8CCB1FA96F7F00E5FBF9 /* SwiftyJSON.framework */,
-				DD0BFE711CE2890000446474 /* Fabric.framework */,
-				DD0BFE721CE2890000446474 /* Crashlytics.framework */,
 				DD0BFE3B1CE25D1400446474 /* PodcastMenu */,
 				DD6DFF5A1DD6A122004954DE /* PodcastMenuTests */,
 				DD0BFE3A1CE25D1400446474 /* Products */,
@@ -399,7 +391,6 @@
 				DD0BFE351CE25D1400446474 /* Sources */,
 				DD0BFE361CE25D1400446474 /* Frameworks */,
 				DD0BFE371CE25D1400446474 /* Resources */,
-				DD0BFE701CE288E900446474 /* Crashlytics */,
 				012E8CD21FA96F7F00E5FBF9 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -499,23 +490,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		DD0BFE701CE288E900446474 /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 69b44b9b0e1f177a7fb1b6199e9a040897e9dfc0 22ecca766b464658a34a8526d5dad0b7a255f04ed7c47ac02769feb213488d25";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DD0BFE351CE25D1400446474 /* Sources */ = {
@@ -642,6 +616,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -692,6 +667,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -719,7 +695,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PodcastMenu/PodcastMenu-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -745,7 +720,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PodcastMenu/PodcastMenu-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
