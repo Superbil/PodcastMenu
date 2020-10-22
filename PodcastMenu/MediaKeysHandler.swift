@@ -50,8 +50,8 @@ class MediaKeysHandler: NSObject {
     fileprivate var eventTap: PMEventTap!
     
     fileprivate func startEventTap() {
-//        eventTap = PMEventTap(mediaKeyEventHandler: mediaKeyEvent)
-//        eventTap.start()
+        eventTap = PMEventTap(mediaKeyEventHandler: mediaKeyEvent)
+        eventTap.start()
     }
     
 }
