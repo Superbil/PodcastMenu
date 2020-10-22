@@ -90,7 +90,8 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     if (!AXIsProcessTrustedWithOptions((CFDictionaryRef)@{(__bridge id)kAXTrustedCheckOptionPrompt: @NO})) {
         return;
     }
-    [[NSApplication sharedApplication]abortModal];
+    [[NSApplication sharedApplication] abortModal];
+
     [self startObserving];
 }
 
@@ -99,6 +100,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:urlString]];
 }
+
 - (void)start
 {
     if (@available(macOS 10.14, *)) {
