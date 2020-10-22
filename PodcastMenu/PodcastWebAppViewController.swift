@@ -128,7 +128,7 @@ class PodcastWebAppViewController: NSViewController {
         
         if #available(OSX 10.12.2, *) {
             touchBarController.installControlStripNowPlayingItem()
-            touchBarController.showTouchBar()
+//            touchBarController.showTouchBar()
         }
     }
     
