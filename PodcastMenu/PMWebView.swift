@@ -56,7 +56,7 @@ private class PMScrollCaptureView: NSView {
     
     fileprivate override func scrollWheel(with theEvent: NSEvent) {
         // cancel horizontal scrolling
-        guard fabs(theEvent.scrollingDeltaX) < fabs(theEvent.scrollingDeltaY) else { return }
+        guard abs(theEvent.scrollingDeltaX) < abs(theEvent.scrollingDeltaY) else { return }
         
         webView.didScroll()
         

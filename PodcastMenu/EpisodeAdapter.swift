@@ -86,7 +86,7 @@ final class EpisodesAdapter: Adapter<JSON, [Episode]> {
             return .error(.missingRequiredFields)
         }
         
-        let episodes: [Episode] = jsonEpisodes.flatMap { json -> Episode? in
+        let episodes: [Episode] = jsonEpisodes.compactMap { json -> Episode? in
             let result = EpisodeAdapter(input: json).adapt()
             switch result {
             case .error(_): return nil

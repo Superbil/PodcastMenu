@@ -37,7 +37,7 @@ final class PodcastsAdapter: Adapter<JSON, [Podcast]> {
             return .error(.missingRequiredFields)
         }
         
-        let podcasts: [Podcast] = jsonPodcasts.flatMap { json -> Podcast? in
+        let podcasts: [Podcast] = jsonPodcasts.compactMap { json -> Podcast? in
             let result = PodcastAdapter(input: json).adapt()
             switch result {
             case .error(_): return nil

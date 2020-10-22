@@ -68,7 +68,7 @@ class TouchBarScrubberViewController: NSViewController {
     
     var currentEpisode: Episode? = nil {
         didSet {
-            guard let index = items.index(where: { $0.model.title == currentEpisode?.title }) else { return }
+            guard let index = items.firstIndex(where: { $0.model.title == currentEpisode?.title }) else { return }
             
             scrubber.selectedIndex = index
         }
