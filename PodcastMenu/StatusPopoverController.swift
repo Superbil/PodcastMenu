@@ -27,14 +27,17 @@ class StatusPopoverController: NSObject {
     
     func showPopoverFromStatusItemButton(_ statusItemButton: NSStatusBarButton) {
         if popover == nil {
-            popover = NSPopover()
-            popover!.contentViewController = webAppController
-            popover!.behavior = .transient
+            let popover = NSPopover()
+            popover.contentViewController = webAppController
+            popover.behavior = .transient
+            self.popover = popover
         }
         
         updatePopoverAppearance()
-        
-        popover!.show(relativeTo: NSZeroRect, of: statusItemButton, preferredEdge: .maxY)
+
+        if let po = popover {
+            po.show(relativeTo: NSZeroRect, of: statusItemButton, preferredEdge: .maxY)
+        }
         
         NSApp.activate(ignoringOtherApps: true)
     }
