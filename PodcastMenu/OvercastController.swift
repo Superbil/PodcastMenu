@@ -45,7 +45,7 @@ class OvercastController: NSObject, WKNavigationDelegate {
      fileprivate func startAutomaticRefresh() {
         Timer.scheduledTimer(timeInterval: TimeInterval(Constants.automaticRefreshInterval), target: self, selector: #selector(self.refresh(timer:)) , userInfo: nil, repeats: true)
         
-        NSWorkspace.shared().notificationCenter.addObserver(forName: Notification.Name.NSWorkspaceDidWake, object: NSWorkspace.shared(), queue: nil) { [weak self] _ in
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: NSWorkspace.shared, queue: nil) { [weak self] _ in
             self?.refreshPodcastsIfNeeded()
         }
     }
@@ -114,7 +114,7 @@ class OvercastController: NSObject, WKNavigationDelegate {
         // if the user clicked a link to another website, open with the default browser instead of navigating inside the app
         guard isValidOvercastURL(URL) else {
             decision = .cancel
-            NSWorkspace.shared().open(URL)
+            NSWorkspace.shared.open(URL)
             return
         }
     }
@@ -162,7 +162,7 @@ class OvercastController: NSObject, WKNavigationDelegate {
         guard !NSApp.isActive else { return }
         
         NSAnimationContext.beginGrouping()
-        NSAnimationContext.current().duration = 0.0
+        NSAnimationContext.current.duration = 0.0
         webView.window?.orderFrontRegardless()
         webView.window?.alphaValue = 0.0
         NSAnimationContext.endGrouping()
@@ -172,7 +172,7 @@ class OvercastController: NSObject, WKNavigationDelegate {
         guard !NSApp.isActive else { return }
         
         NSAnimationContext.beginGrouping()
-        NSAnimationContext.current().duration = 0.0
+        NSAnimationContext.current.duration = 0.0
         webView.window?.orderOut(nil)
         NSAnimationContext.endGrouping()
     }
@@ -271,7 +271,7 @@ class OvercastController: NSObject, WKNavigationDelegate {
             if let superview = webView.superview {
                 errorViewController.view.frame = NSRect(x: 0.0, y: superview.bounds.height - Metrics.errorBarHeight, width: superview.bounds.width, height: Metrics.errorBarHeight)
                 errorViewController.view.alphaValue = 0.0
-                errorViewController.view.autoresizingMask = [.viewWidthSizable, .viewMinYMargin]
+                errorViewController.view.autoresizingMask = [.width, .height]
                 superview.addSubview(errorViewController.view)
             }
             

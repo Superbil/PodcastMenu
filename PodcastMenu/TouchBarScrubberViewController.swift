@@ -42,7 +42,7 @@ class TouchBarScrubberViewController: NSViewController {
     weak var delegate: TouchBarScrubberViewControllerDelegate?
     
     init() {
-        super.init(nibName: nil, bundle: nil)!
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -57,7 +57,7 @@ class TouchBarScrubberViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrubber.register(ScrubberRemoteImageItemView.self, forItemIdentifier: Constants.itemIdentifier)
+//        scrubber.register(ScrubberRemoteImageItemView.Type, forItemIdentifier: Constants.itemIdentifier)
     }
     
     var currentEpisodeTitle: String? = nil {
@@ -112,7 +112,7 @@ class TouchBarScrubberViewController: NSViewController {
         s.showsAdditionalContentIndicators = true
         s.dataSource = self
         s.delegate = self
-        s.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        s.autoresizingMask = [.width, .height]
         
         return s
     }()
@@ -131,11 +131,11 @@ extension TouchBarScrubberViewController: NSScrubberDataSource, NSScrubberDelega
     }
     
     func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        var item = scrubber.makeItem(withIdentifier: Constants.itemIdentifier, owner: scrubber) as? ScrubberRemoteImageItemView
+        var item = scrubber.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: Constants.itemIdentifier), owner: scrubber) as? ScrubberRemoteImageItemView
         
         if item == nil {
             item = ScrubberRemoteImageItemView()
-            item?.identifier = Constants.itemIdentifier
+            item?.identifier = NSUserInterfaceItemIdentifier(rawValue: Constants.itemIdentifier)
             item?.imageAlignment = .alignTop
         }
         

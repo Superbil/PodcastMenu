@@ -18,7 +18,7 @@ class PodcastWebAppViewController: NSViewController {
     
     
     init() {
-        super.init(nibName: nil, bundle: nil)!
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -34,8 +34,8 @@ class PodcastWebAppViewController: NSViewController {
         
         b.translatesAutoresizingMaskIntoConstraints = false
         b.isBordered = false
-        b.bezelStyle = NSBezelStyle.inline
-        b.image = NSImage(named: NSImageNameActionTemplate)
+        b.bezelStyle = NSButton.BezelStyle.inline
+        b.image = NSImage(named: NSImage.actionTemplateName)
         b.toolTip = NSLocalizedString("Options", comment: "Options menu tooltip")
         b.sendAction(on: .leftMouseDown)
         b.imagePosition = .imageOnly
@@ -51,7 +51,7 @@ class PodcastWebAppViewController: NSViewController {
         b.translatesAutoresizingMaskIntoConstraints = false
         b.isBordered = false
         b.bezelStyle = .inline
-        b.image = NSImage(named: NSImageNameShareTemplate)
+        b.image = NSImage(named: NSImage.shareTemplateName)
         b.toolTip = NSLocalizedString("Share", comment: "Share button tooltip")
         b.sendAction(on: .leftMouseDown)
         b.imagePosition = .imageOnly
@@ -157,7 +157,7 @@ class PodcastWebAppViewController: NSViewController {
     
     func openURL(_ URL: Foundation.URL) {
         guard overcastController.isValidOvercastURL(URL) else {
-            NSWorkspace.shared().open(URL)
+            NSWorkspace.shared.open(URL)
             return
         }
         
@@ -256,8 +256,16 @@ class PodcastWebAppViewController: NSViewController {
             guard error == nil else { return }
             guard let jsString = evalResult as? String else { return }
             guard let jsData = jsString.data(using: .utf8) else { return }
-            
-            let result = EpisodesAdapter(input: JSON(data: jsData)).adapt()
+
+            var rawJS: JSON?
+            do {
+                rawJS = try JSON(data: jsData)
+            } catch let error {
+                debugPrint("Can't decode json, \(error)")
+            }
+            guard let json = rawJS else { return }
+            let result = EpisodesAdapter(input: json).adapt()
+
             switch result {
             case .success(let episodes):
                 guard Preferences.notificationsEnabled else { return }
@@ -272,11 +280,19 @@ class PodcastWebAppViewController: NSViewController {
             guard error == nil else { return }
             guard let jsString = evalResult as? String else { return }
             guard let jsData = jsString.data(using: .utf8) else { return }
-            
-            let result = PodcastsAdapter(input: JSON(data: jsData)).adapt()
+
+            var rawJS: JSON?
+            do {
+                rawJS = try JSON(data: jsData)
+            } catch let error {
+                debugPrint("Can't decode json, \(error)")
+            }
+            guard let json = rawJS else { return }
+            let result = EpisodesAdapter(input: json).adapt()
+
             switch result {
-            case .success(let podcasts):
-                self?.touchBarController.podcasts = podcasts
+            case .success(let episodes):
+                self?.touchBarController.episodes = episodes
             default: break
             }
         }
@@ -285,11 +301,19 @@ class PodcastWebAppViewController: NSViewController {
             guard error == nil else { return }
             guard let jsString = evalResult as? String else { return }
             guard let jsData = jsString.data(using: .utf8) else { return }
-            
-            let result = PodcastsAdapter(input: JSON(data: jsData)).adapt()
+
+            var rawJS: JSON?
+            do {
+                rawJS = try JSON(data: jsData)
+            } catch let error {
+                debugPrint("Can't decode json, \(error)")
+            }
+            guard let json = rawJS else { return }
+            let result = EpisodesAdapter(input: json).adapt()
+
             switch result {
-            case .success(let podcasts):
-                self?.touchBarController.podcasts = podcasts
+            case .success(let episodes):
+                self?.touchBarController.episodes = episodes
             default: break
             }
         }
@@ -310,8 +334,15 @@ class PodcastWebAppViewController: NSViewController {
             guard error == nil else { return }
             guard let jsString = evalResult as? String else { return }
             guard let jsData = jsString.data(using: .utf8) else { return }
-            
-            let result = PlaybackInfoAdapter(input: JSON(data: jsData)).adapt()
+
+            var rawJS: JSON?
+            do {
+                rawJS = try JSON(data: jsData)
+            } catch let error {
+                debugPrint("Can't decode json, \(error)")
+            }
+            guard let json = rawJS else { return }
+            let result = PlaybackInfoAdapter(input: json).adapt()
             
             DispatchQueue.main.async {
                 completion(result)
@@ -321,7 +352,7 @@ class PodcastWebAppViewController: NSViewController {
     
     // MARK: - Playback Info
     
-    func propagatePlaybackInfo(_ notification: Notification) {
+    @objc func propagatePlaybackInfo(_ notification: Notification) {
         fetchPlaybackInfo { [weak self] result in
             switch result {
             case .success(let info):
@@ -332,7 +363,7 @@ class PodcastWebAppViewController: NSViewController {
         }
     }
     
-    func stopPlaybackInfoPropagation(_ notification: Notification) {
+    @objc func stopPlaybackInfoPropagation(_ notification: Notification) {
         currentPlaybackInfo = nil
         
         #if DEBUG
@@ -358,15 +389,15 @@ class PodcastWebAppViewController: NSViewController {
         
         let vuItem = NSMenuItem(title: NSLocalizedString("Enable VU Meter", comment: "Enable VU Meter"), action: #selector(toggleReflectAudioLevelInIcon(_:)), keyEquivalent: "")
         vuItem.target = self
-        vuItem.state = Preferences.enableVU ? NSOnState : NSOffState
+        vuItem.state = Preferences.enableVU ? NSControl.StateValue.on : NSControl.StateValue.off
         
         let passthroughItem = NSMenuItem(title: NSLocalizedString("Don't Own Media Keys", comment: "Don't Own Media Keys"), action: #selector(toggleMediaKeysPassthrough(_:)), keyEquivalent: "")
         passthroughItem.target = self
-        passthroughItem.state = Preferences.mediaKeysPassthroughEnabled ? NSOnState : NSOffState
+        passthroughItem.state = Preferences.mediaKeysPassthroughEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
         
         let enableNotificationsItem = NSMenuItem(title: NSLocalizedString("Enable Notifications", comment: "Enable Notifications"), action: #selector(toggleNotifications(_:)), keyEquivalent: "")
         enableNotificationsItem.target = self
-        enableNotificationsItem.state = Preferences.notificationsEnabled ? NSOnState : NSOffState
+        enableNotificationsItem.state = Preferences.notificationsEnabled ? NSControl.StateValue.on : NSControl.StateValue.off
         
         let logOutItem = NSMenuItem(title: NSLocalizedString("Log Out", comment: "Log Out"), action: #selector(logOut(_:)), keyEquivalent: "")
         logOutItem.target = self
@@ -402,18 +433,18 @@ class PodcastWebAppViewController: NSViewController {
     }
     
     @objc fileprivate func toggleReflectAudioLevelInIcon(_ sender: NSMenuItem) {
-        sender.state = sender.state == NSOnState ? NSOffState : NSOnState
-        Preferences.enableVU = (sender.state == NSOnState)
+        sender.state = sender.state == NSControl.StateValue.on ? NSControl.StateValue.off : NSControl.StateValue.on
+        Preferences.enableVU = (sender.state == NSControl.StateValue.on)
     }
     
     @objc fileprivate func toggleMediaKeysPassthrough(_ sender: NSMenuItem) {
-        sender.state = sender.state == NSOnState ? NSOffState : NSOnState
-        Preferences.mediaKeysPassthroughEnabled = (sender.state == NSOnState)
+        sender.state = sender.state == NSControl.StateValue.on ? NSControl.StateValue.off : NSControl.StateValue.on
+        Preferences.mediaKeysPassthroughEnabled = (sender.state == NSControl.StateValue.on)
     }
     
     @objc fileprivate func toggleNotifications(_ sender: NSMenuItem) {
-        sender.state = sender.state == NSOnState ? NSOffState : NSOnState
-        Preferences.enableNotifications = (sender.state == NSOnState)
+        sender.state = sender.state == NSControl.StateValue.on ? NSControl.StateValue.off : NSControl.StateValue.on
+        Preferences.notificationsEnabled = (sender.state == NSControl.StateValue.on)
     }
     
     @objc fileprivate func checkForUpdates(_ sender: NSMenuItem) {
@@ -492,7 +523,7 @@ private enum ConfigMenuItem: Int {
 
 extension PodcastWebAppViewController: NSMenuDelegate {
     
-    override func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         guard let item = ConfigMenuItem(rawValue: menuItem.tag) else {
             return true
         }

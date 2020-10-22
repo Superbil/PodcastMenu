@@ -42,14 +42,14 @@ class StatusPopoverController: NSObject {
     fileprivate func installApplicationTerminationListener() {
         let delayTime = DispatchTime.now() + Double(Int64(2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            NotificationCenter.default.addObserver(self, selector: #selector(StatusPopoverController.closePopover), name: NSNotification.Name.NSApplicationDidResignActive, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(StatusPopoverController.closePopover), name: NSApplication.didResignActiveNotification, object: nil)
         }
     }
     
     fileprivate func updatePopoverAppearance() {
         guard let popover = popover else { return }
         
-        popover.appearance = Theme.isDark ? NSAppearance(named: NSAppearanceNameVibrantDark) : nil
+        popover.appearance = Theme.isDark ? NSAppearance(named: NSAppearance.Name.vibrantDark) : nil
     }
     
     @objc fileprivate func closePopover() {

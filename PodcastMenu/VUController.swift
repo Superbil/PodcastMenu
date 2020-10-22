@@ -39,7 +39,7 @@ class VUController: OvercastLoudnessDelegate {
         
         image.lockFocus()
         
-        let ctx = NSGraphicsContext.current()!.cgContext
+        let ctx = NSGraphicsContext.current!.cgContext
         
         let maskBounds = CGRect(x: 0.0, y: 0.0, width: w, height: h)
         ctx.clip(to: maskBounds, mask: baseImageCG)

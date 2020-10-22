@@ -22,7 +22,7 @@ class PMWebView: WKWebView {
         
         scrollCaptureView.webView = self
         scrollCaptureView.frame = bounds
-        scrollCaptureView.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        scrollCaptureView.autoresizingMask = [.width, .height]
         subviews[0].addSubview(scrollCaptureView)
     }
     
