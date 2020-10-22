@@ -59,12 +59,12 @@ class TouchBarController: NSObject {
     
     @available(OSX 10.12.2, *)
     lazy var backButton: NSButton = {
-        return NSButton(title: "", image: NSImage(named: NSImageNameTouchBarGoBackTemplate)!, target: nil, action: #selector(WKWebView.goBack(_:)))
+        return NSButton(title: "", image: NSImage(named: NSImage.touchBarGoBackTemplateName)!, target: nil, action: #selector(WKWebView.goBack(_:)))
     }()
     
     @available(OSX 10.12.2, *)
     lazy var forwardButton: NSButton = {
-        return NSButton(title: "", image: NSImage(named: NSImageNameTouchBarGoForwardTemplate)!, target: nil, action: #selector(WKWebView.goForward(_:)))
+        return NSButton(title: "", image: NSImage(named: NSImage.touchBarGoForwardTemplateName)!, target: nil, action: #selector(WKWebView.goForward(_:)))
     }()
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -103,7 +103,7 @@ class TouchBarController: NSObject {
         nowPlayingItem.view = NSButton(image: #imageLiteral(resourceName: "controlStripIcon"), target: self, action: #selector(nowPlayingItemActivated))
         NSTouchBarItem.addSystemTrayItem(nowPlayingItem)
         
-        DFRElementSetControlStripPresenceForIdentifier(NSTouchBarItemIdentifier.nowPlayingControlStrip.rawValue, true);
+        DFRElementSetControlStripPresenceForIdentifier(NSTouchBarItem.Identifier.nowPlayingControlStrip.rawValue, true);
     }
     
     @available(OSX 10.12.2, *)
@@ -113,20 +113,12 @@ class TouchBarController: NSObject {
     
     @available(OSX 10.12.2, *)
     func showTouchBar() {
-        if #available(OSX 10.14, *) {
-            NSTouchBar.presentSystemModalTouchBar(nowPlayingTouchBar, placement: 0, systemTrayItemIdentifier: NSTouchBarItemIdentifier(rawValue: "otherTouchBar"))
-            return
-        }
-        NSTouchBar.presentSystemModalFunctionBar(nowPlayingTouchBar, placement: 0, systemTrayItemIdentifier: "otherTouchBar")
+//        NSTouchBar.presentSystemModalFunctionBar(nowPlayingTouchBar, placement: 0, systemTrayItemIdentifier: "otherTouchBar")
     }
     
     @available(OSX 10.12.2, *)
     func hideTouchBar() {
-        if #available(OSX 10.14, *) {
-            NSTouchBar.dismissSystemModalTouchBar(nowPlayingTouchBar)
-            return
-        }
-        NSTouchBar.dismissSystemModalFunctionBar(nowPlayingTouchBar)
+//        NSTouchBar.dismissSystemModalFunctionBar(nowPlayingTouchBar)
     }
     
     @available(OSX 10.12.2, *)
@@ -142,28 +134,28 @@ class TouchBarController: NSObject {
 }
 
 @available(OSX 10.12.2, *)
-extension NSTouchBarItemIdentifier {
-    static let backButton = NSTouchBarItemIdentifier("br.com.guilhermerambo.podcastmenu.back")
-    static let forwardButton = NSTouchBarItemIdentifier("br.com.guilhermerambo.podcastmenu.forward")
-    static let scrubber = NSTouchBarItemIdentifier("br.com.guilhermerambo.podcastmenu.scrubber")
-    static let nowPlayingControlStrip = NSTouchBarItemIdentifier("br.com.guilhermerambo.podcastmenu.nowPlaying")
-    static let miniPlayer = NSTouchBarItemIdentifier("br.com.guilhermerambo.podcastmenu.miniPlayer")
+extension NSTouchBarItem.Identifier {
+    static let backButton = NSTouchBarItem.Identifier("br.com.guilhermerambo.podcastmenu.back")
+    static let forwardButton = NSTouchBarItem.Identifier("br.com.guilhermerambo.podcastmenu.forward")
+    static let scrubber = NSTouchBarItem.Identifier("br.com.guilhermerambo.podcastmenu.scrubber")
+    static let nowPlayingControlStrip = NSTouchBarItem.Identifier("br.com.guilhermerambo.podcastmenu.nowPlaying")
+    static let miniPlayer = NSTouchBarItem.Identifier("br.com.guilhermerambo.podcastmenu.miniPlayer")
 }
 
 @available(OSX 10.12.2, *)
 extension TouchBarController: NSTouchBarDelegate {
     
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
-        case NSTouchBarItemIdentifier.backButton:
+        case NSTouchBarItem.Identifier.backButton:
             let item = NSCustomTouchBarItem(identifier: .backButton)
             item.view = backButton
             return item
-        case NSTouchBarItemIdentifier.forwardButton:
+        case NSTouchBarItem.Identifier.forwardButton:
             let item = NSCustomTouchBarItem(identifier: .forwardButton)
             item.view = forwardButton
             return item
-        case NSTouchBarItemIdentifier.scrubber:
+        case NSTouchBarItem.Identifier.scrubber:
             let item = NSCustomTouchBarItem(identifier: .scrubber)
             item.viewController = scrubberController
             return item

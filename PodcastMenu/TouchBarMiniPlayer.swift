@@ -18,13 +18,13 @@ final class TouchBarMiniPlayer: NSTouchBar {
             fatalError("Missing required nib \(nibName), bundle is probably damaged")
         }
         
-        var nibObjects = NSArray()
+        var nibObjects: NSArray? = NSArray()
         
-        guard nib.instantiate(withOwner: nil, topLevelObjects: &nibObjects) else {
+        guard nib.instantiate(withOwner: nil, topLevelObjects: &nibObjects), let objects = nibObjects else {
             fatalError("Unable to load nib, something is seriously wrong")
         }
         
-        return nibObjects.first(where: { $0 is TouchBarMiniPlayer }) as! TouchBarMiniPlayer
+        return objects.first(where: { $0 is TouchBarMiniPlayer }) as! TouchBarMiniPlayer
     }
     
     override func awakeFromNib() {

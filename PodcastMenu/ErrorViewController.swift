@@ -17,7 +17,7 @@ class ErrorViewController: NSViewController {
     init(error: NSError) {
         self.error = error
         
-        super.init(nibName: nil, bundle: nil)!
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -41,13 +41,13 @@ class ErrorViewController: NSViewController {
     fileprivate let reloadButton: NSButton = {
         let b = NSButton(frame: NSZeroRect)
         
-        b.image = NSImage(named: NSImageNameRefreshFreestandingTemplate)
+        b.image = NSImage(named: NSImage.refreshFreestandingTemplateName)
         b.setButtonType(.momentaryPushIn)
         b.isBordered = false
-        b.bezelStyle = NSBezelStyle.shadowlessSquare
+        b.bezelStyle = NSButton.BezelStyle.shadowlessSquare
         b.sizeToFit()
         b.translatesAutoresizingMaskIntoConstraints = false
-        b.appearance = NSAppearance(named: NSAppearanceNameAqua)
+        b.appearance = NSAppearance(named: NSAppearance.Name.aqua)
         
         return b
     }()
@@ -58,7 +58,7 @@ class ErrorViewController: NSViewController {
         view.layer?.backgroundColor = Theme.Colors.tint.cgColor
         
         view.addSubview(errorLabel)
-        errorLabel.setContentCompressionResistancePriority(NSLayoutPriorityDefaultLow, for: .horizontal)
+        errorLabel.setContentCompressionResistancePriority(NSLayoutConstraint.Priority.defaultLow, for: .horizontal)
         errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Metrics.errorBarMargin).isActive = true
         

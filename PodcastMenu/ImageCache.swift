@@ -24,8 +24,8 @@ final class ImageCache {
     
     class func cacheUrl(for imageUrl: URL) -> URL {
         let filebase = imageUrl.absoluteString.data(using: .utf8)?.base64EncodedString() ?? UUID().uuidString
-        let limitIndex = filebase.index(filebase.endIndex, offsetBy: -filebase.characters.count/2)
-        let finalBase = filebase.substring(from: limitIndex).replacingOccurrences(of: "==", with: "")
+        let limitIndex = filebase.index(filebase.endIndex, offsetBy: -filebase.count / 2)
+        let finalBase = filebase[..<limitIndex].replacingOccurrences(of: "==", with: "")
         let filename = finalBase + "-" + imageUrl.lastPathComponent
         
         let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first! + "/" + Bundle.main.bundleIdentifier! + "/ImageCache/" + filename + "-" + imageUrl.lastPathComponent

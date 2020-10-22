@@ -33,7 +33,7 @@ class Theme: NSObject {
     }
     
     static var appearance: NSAppearance? {
-        return isDark ? NSAppearance(named: NSAppearanceNameVibrantDark) : NSAppearance(named: NSAppearanceNameAqua)
+        return isDark ? NSAppearance(named: NSAppearance.Name.vibrantDark) : NSAppearance(named: NSAppearance.Name.aqua)
     }
     
     override init() {

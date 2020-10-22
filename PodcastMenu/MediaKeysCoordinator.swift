@@ -19,24 +19,24 @@ class MediaKeysCoordinator: NSObject {
         super.init()
         
         
-        NSWorkspace.shared().addObserver(self, forKeyPath: "frontmostApplication", options: [.initial, .new], context: nil)
-        NSWorkspace.shared().addObserver(self, forKeyPath: "runningApplications", options: [.initial, .new], context: nil)
+        NSWorkspace.shared.addObserver(self, forKeyPath: "frontmostApplication", options: [.initial, .new], context: nil)
+        NSWorkspace.shared.addObserver(self, forKeyPath: "runningApplications", options: [.initial, .new], context: nil)
     }
     
     fileprivate var keysOwnedByAnotherApplication = false
     
-    func shouldInterceptMediaKeys() -> Bool {
+    @objc func shouldInterceptMediaKeys() -> Bool {
         return keysOwnedByAnotherApplication == false || Preferences.mediaKeysPassthroughEnabled
     }
     
-    func shouldPassthroughMediaKeysEvents() -> Bool {
+    @objc func shouldPassthroughMediaKeysEvents() -> Bool {
         return Preferences.mediaKeysPassthroughEnabled
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "frontmostApplication" {
             // if frontmost application is one of the apps listed in mediaKeysUsers, disable media keys handling, if It's our app, reenable if disabled
-            if let identifier = NSWorkspace.shared().frontmostApplication?.bundleIdentifier {
+            if let identifier = NSWorkspace.shared.frontmostApplication?.bundleIdentifier {
                 if !keysOwnedByAnotherApplication {
                     if (mediaKeysUsers.contains(identifier)) {
                         keysOwnedByAnotherApplication = true
@@ -54,7 +54,7 @@ class MediaKeysCoordinator: NSObject {
                 }
             }
         } else if keyPath == "runningApplications" {
-            if !NSWorkspace.shared().runningApplications.reduce(false, { $0 ? $0 : mediaKeysUsers.contains($1.bundleIdentifier ?? "") }) {
+            if !NSWorkspace.shared.runningApplications.reduce(false, { $0 ? $0 : mediaKeysUsers.contains($1.bundleIdentifier ?? "") }) {
                 // all media keys users have quit, reclaim media keys
                 keysOwnedByAnotherApplication = false
                 #if DEBUG

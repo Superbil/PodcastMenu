@@ -28,9 +28,9 @@ class PMFreestandingButton: NSButton {
         return false
     }
     
-    override class func cellClass() -> AnyClass {
-        return PMFreestandingButtonCell.self
-    }
+//    override class func cellClass() -> AnyClass {
+//        return PMFreestandingButtonCell.self
+//    }
     
     override var isHighlighted: Bool {
         didSet {
@@ -45,7 +45,7 @@ final class PMFreestandingButtonCell: NSButtonCell {
     override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
         guard let image = image else { return }
         
-        guard let ctx = NSGraphicsContext.current()?.cgContext else { return }
+        guard let ctx = NSGraphicsContext.current?.cgContext else { return }
         ctx.saveGState()
         
         let constrainedWidth: CGFloat

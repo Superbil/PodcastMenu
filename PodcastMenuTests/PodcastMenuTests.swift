@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SwiftyJSON
 @testable import PodcastMenu
 
 class PodcastMenuTests: XCTestCase {
@@ -40,7 +41,14 @@ class PodcastMenuTests: XCTestCase {
     }
     
     func testParsingPodcasts() {
-        let result = PodcastsAdapter(input: JSON(data: testPodcastsData)).adapt()
+        var rawJS: JSON?
+        do {
+            rawJS = try JSON(data: testPodcastsData)
+        } catch let error {
+            XCTFail("Can't decode json, \(error)")
+        }
+        guard let json = rawJS else { return }
+        let result = PodcastsAdapter(input: json).adapt()
         
         switch result {
         case .error(let error):
@@ -59,8 +67,15 @@ class PodcastMenuTests: XCTestCase {
     }
     
     func testParsingEpisodes() {
-        let result = EpisodesAdapter(input: JSON(data: testEpisodesData)).adapt()
-        
+        var rawJS: JSON?
+        do {
+            rawJS = try JSON(data: testEpisodesData)
+        } catch let error {
+            XCTFail("Can't decode json, \(error)")
+        }
+        guard let json = rawJS else { return }
+        let result = EpisodesAdapter(input: json).adapt()
+
         switch result {
         case .error(let error):
             XCTFail("Expected to succeed but failed with error \(error)")
@@ -70,7 +85,7 @@ class PodcastMenuTests: XCTestCase {
                 return
             }
             
-            let episode = episodes[1]
+            let episode: Episode = episodes[1]
             
             XCTAssertEqual(episode.podcast.name, "build phase")
             XCTAssertEqual(episode.podcast.poster, URL(string: "https://media.simplecast.com/podcast/image/272/1437489285-artwork.jpg")!)
